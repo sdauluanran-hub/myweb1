@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>村上春樹｜チーズ・ケーキのような形をした僕の貧乏 · 逐段对照</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #ece8e0;
+            font-family: 'Inter', 'Helvetica Neue', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            line-height: 1.7;
+            color: #2a2a2a;
+            padding: 2rem 1rem;
+        }
+        .page {
+            max-width: 860px;
+            margin: 0 auto;
+            background-color: #ffffffdf;
+            backdrop-filter: blur(2px);
+            border-radius: 2.5rem 2.5rem 2rem 2rem;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.03);
+            padding: 2.8rem 2.5rem;
+            border: 1px solid #f0eae1;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            font-family: 'Times New Roman', 'Yu Mincho', serif;
+            color: #3d3d35;
+            margin-bottom: 0.25rem;
+            border-left: 6px solid #b48c7a;
+            padding-left: 1.3rem;
+        }
+        .subhead {
+            font-size: 0.95rem;
+            color: #7a6e63;
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+            font-style: italic;
+            border-bottom: 1px dashed #d9d0c5;
+            padding-bottom: 0.7rem;
+        }
+        /* 故事区块 */
+        .story-block {
+            margin-top: 1.2rem;
+        }
+        .para-unit {
+            margin-bottom: 2.4rem;
+            border-bottom: 1px solid #f0ebe4;
+            padding-bottom: 1.8rem;
+        }
+        .para-unit:last-child {
+            border-bottom: none;
+        }
+        .japanese-para {
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Times New Roman', serif;
+            font-size: 1.04rem;
+            text-align: justify;
+            margin-bottom: 0.8rem;
+            line-height: 1.9;
+            color: #1f1f1f;
+        }
+        /* 注释下划线 */
+        .note-word {
+            position: relative;
+            border-bottom: 1px dashed #b9886e;
+            cursor: help;
+            transition: background-color 0.15s;
+        }
+        .note-word:hover {
+            background-color: #f9ede6;
+        }
+        .tooltip-box {
+            display: none;
+            position: absolute;
+            bottom: 1.8rem;
+            left: 0;
+            background: #4d423b;
+            color: #fdf7ec;
+            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            border-radius: 16px;
+            width: 250px;
+            z-index: 200;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+            pointer-events: none;
+            border: 1px solid #7a6256;
+        }
+        .tooltip-box::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 16px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: #4d423b transparent transparent transparent;
+        }
+        .note-word:hover .tooltip-box {
+            display: block;
+        }
+
+        /* 可折叠译文块 – 干净漂亮 */
+        details {
+            margin-top: 0.75rem;
+            border-radius: 24px;
+            background-color: #faf8f5;
+            border: 1px solid #e6dfd6;
+            transition: all 0.2s;
+        }
+        details[open] {
+            background-color: #f7f2ea;
+            border-color: #ccb8a8;
+            box-shadow: 0 4px 12px rgba(172, 142, 122, 0.15);
+        }
+        summary {
+            padding: 0.7rem 1.3rem;
+            font-weight: 430;
+            color: #6f5546;
+            cursor: pointer;
+            list-style: none;  /* 移除默认三角，自定义 */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+            border-radius: 24px;
+            user-select: none;
+        }
+        summary::-webkit-details-marker {
+            display: none;  /* 隐藏默认箭头（webkit） */
+        }
+        summary::before {
+            content: "📖";
+            font-size: 1.1rem;
+            opacity: 0.8;
+            transition: transform 0.2s;
+        }
+        details[open] summary::before {
+            content: "📖";
+            transform: rotate(0deg);
+        }
+        /* 加一个小箭头装饰 */
+        .summary-text {
+            flex: 1;
+        }
+        .summary-icon {
+            font-size: 0.8rem;
+            color: #b09787;
+            transition: transform 0.2s;
+        }
+        details[open] .summary-icon {
+            transform: rotate(90deg);
+        }
+        .chinese-translation {
+            padding: 0.5rem 1.5rem 1.3rem 1.5rem;
+            font-size: 0.98rem;
+            border-top: 1px dashed #e0d4ca;
+            color: #3e3a36;
+            text-align: justify;
+        }
+        .chinese-translation p {
+            margin: 0.6rem 0;
+        }
+
+        /* 词汇表 */
+        .glossary {
+            background: #f3ede7;
+            border-radius: 30px;
+            padding: 2rem 2rem 1.5rem;
+            margin: 2.5rem 0 1.5rem;
+        }
+        .glossary h3 {
+            font-weight: 400;
+            font-size: 1.3rem;
+            color: #4b3e36;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .glossary h3 span {
+            background: #b8a392;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.2rem 1.5rem;
+        }
+        .glossary-item {
+            border-bottom: 1px solid #d9cdc2;
+            padding-bottom: 0.5rem;
+        }
+        .glossary-word {
+            font-weight: 550;
+            color: #5c4a3c;
+            font-size: 1rem;
+        }
+        .glossary-def {
+            font-size: 0.88rem;
+            color: #5b4f47;
+            opacity: 0.9;
+        }
+        .extra-note {
+            background-color: #e5dbd2;
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            margin: 2rem 0 1rem;
+            color: #2b231f;
+        }
+        .badge {
+            background-color: #a68572;
+            color: white;
+            padding: 0.15rem 1rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.6px;
+            display: inline-block;
+            margin-right: 0.8rem;
+        }
+        .footer {
+            margin-top: 2.2rem;
+            font-size: 0.85rem;
+            color: #9d8f84;
+            text-align: center;
+            border-top: 1px solid #e4dbd2;
+            padding-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <h1>チーズ・ケーキのような形をした僕の貧乏</h1>
+    <div class="subhead">村上春樹（『カンガルー日和』）／ 訳：林少华</div>
+
+    <!-- 故事主体：每一个日文段落紧跟一个折叠译文 -->
+    <div class="story-block">
+        <!-- 段落1 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                我々はその土地を「<span class="note-word">三角地帯<span class="tooltip-box">さんかくちたい：三角地带。形状如楔子般的狭长土地。</span></span>」と呼んでいた。それ以外にどう呼べばいいのか僕には<span class="note-word">見当もつかなかった<span class="tooltip-box">けんとうもつかない：完全想不到，毫无头绪。</span></span>。だってそれはまったくの、絵に描いたような三角形の土地だったのだ。僕と彼女はそんな土地の上に住んでいた。一九七三年だか四年だかの話だ。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>我们都管那个地方叫“三角地带”。此外我琢磨不出如何称呼是好。因为那的的确确是个三角形，画上画的一般。我和她就住在那个地方，一九七三年或七四年的事了。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落2 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                「三角地帯」といっても、いわゆる<span class="note-word">デルタ<span class="tooltip-box">delta：三角洲。此处特意澄清并非河流三角洲，而是像切蛋糕的形状。</span></span>の形を想像してもらっては困る。我々の住んでいた「三角地帯」はもっと細長く、<span class="note-word">くさび<span class="tooltip-box">楔子。一头尖细、嵌入缝隙的木片或金属片。</span></span>のような形をしている。もう少しくわしく説明するなら、まずはフォール・サイズのまるいチーズ・ケーキを思い浮かべていただきたい。それからそれを<span class="note-word">包丁<span class="tooltip-box">ほうちょう：菜刀。</span></span>で十二等分していただきたい。つまり時計の文字盤のような格好に切れめを入れていくわけである。その結果として当然、先端の角度が三十度のケーキ・ピースが十二個できあがる。そのひとつを皿にとって、紅茶でもすすりながらじっくりと眺めて下さい。これが―この先のとがった細長いケーキ・ピースが―我々の「三角地帯」の正確な形である。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>虽说是“三角地带”，可不要想象成delta形状。我们住的“三角地带”细细长长，状如楔子。若说得再具体点，请你首先想像出一个正常尺寸的圆圆的奶酪蛋糕，再用厨刀将它均匀地切成十二份，也就是切成有十二道格的钟表盘那个样子。其结果，当然出现十二块尖角为三十度的蛋糕。将其中一块放在盘里，边啜红茶什么的边细细地看。那顶端尖尖的、细细长长的蛋糕片，就是我们“三角地带”的准确形状。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落3 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                どうしてそのような不自然な形の土地ができてしまったのか、とあなたは<span class="note-word">訊ねる<span class="tooltip-box">たずねる：询问，打听。</span></span>かもしれない。あるいは訊ねないかもしれない。どちらでもいい。どちらにしても、何故そうなったのかは僕にもよくわからないのだ。地元の人に訊いてみてもよくわからなかった。それはずっとずっと昔から三角形で、今も三角形で、これから先もずっとずっと三角形であるに違いないという程度のことしかわからなかった。地元の人々はどちらかというとその「三角地帯」についてはあまりしゃべりたくないし考えたくもないという感じだった。どうして「三角地帯」がそんな風に―耳のうしろの<span class="note-word">いぼ<span class="tooltip-box">疣、瘊子。比喻不受欢迎、多余的东西。</span></span>みたいに―冷たく扱われるのか、その理由はよくわからなかった。たぶん変な形をしていたせいだろう。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>怎么会形成如此形状不自然的地带呢？——你也许会问，也许不问，都无所谓。问不问反正我都不清楚。问本地人也问不出个究竟，他们知道的不外乎是很早很早以前是三角形，现在是三角形，将来定然也是三角形。总的说来，本地人好像不大愿意谈也不大想“三角地带”，何以“三角地带”被如此——像耳后疣一样——漠然置之，缘由不得而知，大概是因为形状怪异吧。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落4 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                「三角地帯」の両脇には二種類の鉄道線路が走っていた。ひとつは<span class="note-word">国鉄線<span class="tooltip-box">こくてつせん：日本国有铁道，现JR的前身。</span></span>で、もうひとつは<span class="note-word">私鉄線<span class="tooltip-box">してつせん：私营铁路。</span></span>である。その二つの鉄道線はしばらく併走してから、このくさびの先端を分岐点として、まるでひき裂かれるように不自然な角度で北と南に分かれるのだ。これはなかなかの眺めである。「三角地帯」の先端で電車の往き来を眺めていると、まるで波を割って海上をつき進んでいく<span class="note-word">駆逐艦<span class="tooltip-box">くちくかん：驱逐舰。</span></span>の<span class="note-word">ブリッジ<span class="tooltip-box">舰桥，指挥室。</span></span>に立っているような気分になる。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>“三角地带”两侧有两条铁路通过，一条是国营线，一条是私营线。两条铁路齐头并进了一阵子，以楔尖为分歧点，简直就像被撕裂开来一般以不自然的角度各奔南北，景观十分了得。每次目睹电气列车在“三角地带”的尖端南来北往，我就恍惚觉得自己是站在驱逐舰舰桥之上，而那驱逐舰正在海上破浪前进。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落5 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                しかし住み心地・居住性という観点から見れば「三角地帯」は実に無茶苦茶な代物だった。まず騒音がひどかった。それはそうだ。なにしろ二本の鉄道線路にぴったりとはさみこまれているわけだから、うるさくないわけがない。玄関の戸を開けると目の前を電車が走っているし、裏側の窓を開けるとそれはそれでまた別の電車が目の前を走っている。目の前という表現は決して誇張ではない。じっさい乗客と目が合って会釈できるくらい間近に電車は走っていたのだ。今思い出してもたいしたものだという気がする。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>但是，从居住舒适度和居住功能来看，“三角地带”实在是一塌糊涂。首先噪音厉害。也难怪，毕竟两条铁路左右相夹，不可能不吵。一开前门，眼前一列电车呼啸而过；一开后窗，眼前又一列电车咆哮而至。用眼前这种说法决不夸张，实际上两列电车也近得乘客可以对视致意，如今想起来都感叹不已。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落6 包含やれやれ单独一行，合并处理更方便 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                でも終電が通ってしまえばあとは静かじゃないかとあなたは言うかもしれない。まあ普通はそう考える。僕だって実際に引越してくるまではそう考えていた。しかしそこには終電なんて存在しなかった。旅客列車が午前一時前に全部の運行を終えてしまうと、今度は深夜便の貨車の列がそのあとをひきついだ。そして明け方までかけて貨車がひととおり通り過ぎてしまうと、翌日の旅客輸送が始まる。その繰りかえしが来る日も来る日も延々とつづくわけだ。<br><span class="note-word">やれやれ<span class="tooltip-box">唉，哎呀。表示叹息、无奈。</span></span>。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>你或许要说末班车过去后总该安静了吧。通常都那么想，搬来之前其实我也那么想来着。然而压根儿就不存在什么末班车。旅客列车凌晨一时全部运行结束后，深夜班次的货物列车接踵而至；天明时分货车大体告一段落，翌日的客车又杀上门来。如此日复一日无尽无休。呜呼！</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落7 中介商部分，包括对话 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                我々がわざわざそのような場所を選んで住んだのは一にも二にも家賃が安かったからだ。一軒家で部屋が三つあって、風呂がついていて、小さな庭まであって、それで六畳一間のアパートと同じくらいの家賃なのだ。一軒家だから猫だって飼える。まるで我々のために用意されたような家だ。我々は結婚したばかりで、自慢するわけじゃないけれど、ギネス・ブックに載ってもおかしくないくらい貧乏だった。我々は駅前の不動産屋の貼り紙でその貸家をみつけた。条件と家賃と間取りを見る限り、それは驚異的な掘り出しものだった。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>我们所以特意选住这里，第一第二都是因为房租便宜。独门独院三个房间，有浴室，甚至有个小花园，而房租仅相当于公寓里一个六张榻榻米大小的房间。既是独门独院，那么猫也能养。简直就像专为我们准备的房子。我们刚刚结婚，非我自吹，穷得上吉尼斯记录都绰绰有余。我们是在站前不动产中介店的贴纸上发现这房子的。仅就条件和租金和房子结构来看，堪称奇迹性发掘。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落8 秃头中介商 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                「安いこた安いよ」と頭の禿げた不動産屋が言った。「ま、かなりうるさいんだけどさ、それさえ我慢できりゃ掘り出しものと言えなくもないだろうね」<br>
+                「とにかく見せてもらえますか？」と僕は訊ねた。<br>
+                「いいよ、でもさ、あんたたちだけで行ってきてくんないかな？　俺、あそこ行くと頭痛むんだよ」<br>
+                彼は鍵を貸してくれ、家までの地図を描いてくれた。気楽な不動産屋だ。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>“便宜得很哟！”秃脑瓜子中介商说，“啊，吵倒是相当吵的，不过只消忍耐一下，未尝不可说是拾来的大元宝。”<br>“反正先看看好么？”我问。<br>“好好。不过，你们自己去可好？我嘛，一去那里就头疼。”<br>他借给钥匙，画出去那座房子的路线图。好个爽快的中介商。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落9 走到三角地带的描述 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                駅から見ると「三角地帯」はすぐ近くに見える。でも実際に歩いてみると、そこに辿りつくまでにはおそろしいくらい時間がかかる。鉄道線路をぐるっと迂回し、陸橋を渡り、こぎたない坂道を下りたり上ったりして、やっと後側から「三角地帯」に回り込むのである。あたりには商店とかそんなものは一切ない。見事なくらい<span class="note-word">うらぶれている<span class="tooltip-box">落魄、凋敝；此处指荒凉萧条。</span></span>。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>从火车站看去，“三角地带”似乎近在眼前，但实际走起来，到那里花的时间相当惊人。在铁道上绕一圈，过天桥，沿脏兮兮的坡路上上下下，好歹从后面兜到了“三角地带”。周围商店之类形影皆无，寒伧得近乎完美。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落10 进屋看房 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                僕と彼女は「三角地帯」の先端にぽつんと建っている家の中に入り、一時間ばかりそこでぼんやりしていた。そのあいだにずいぶんたくさんの電車が家の両側を通り過ぎていった。特急が通過すると、窓ガラスが<span class="note-word">ピシピシ<span class="tooltip-box">拟声词，咔咔作响，形容震动剧烈。</span></span>と音を立てた。電車が通っているあいだはお互いの話は聞こえなかった。何かを話している最中に電車が通ると、我々は口をつぐんで電車がすっかり通りすぎてしまうのを待った。静かになって我々が話しはじめると、またすぐに次の電車がやってきた。そういうのってコミュニケーションの分断というか分裂というか、すごく<span class="note-word">ジャン＝リュック・ゴダール<span class="tooltip-box">让-吕克·戈达尔，法国新浪潮导演，电影常出现断裂、跳接的风格。</span></span>風だ。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>我和她走进“三角地带”尖头的一座孤零零的房子，在里面逗留了一个小时。这时间里有相当之多的电车从房子两侧通过。特快通过时，窗玻璃“咔咔”作响。过车时间里听不到对方说话。正说着有车开来，我们便闭嘴等车过完。静下来刚开始说话，又一列电车尾随而至。那情形，不知该称为交流的中断还是分裂，总之是十分让·吕克·戈达尔式的。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落11 除了噪音… -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                でも騒音を別にすれば、家の雰囲気自体はなかなか悪くなかった。造りはたしかに古めかしいし全体的に傷んではいたけれど、床の間やら濡れ縁やらがあって感じは良かった。窓から射し込んだ春の光が、畳の上に小さな四角い<span class="note-word">日だまり<span class="tooltip-box">ひだまり：阳光照到的地方，向阳处。</span></span>を作り出していた。それは僕がずっと昔、ほんの小さな子供の頃に住んだことのある家に似ていた。「借りることにしようよ」と僕は言った。「たしかにうるさいけれど、なんとか慣れると思うよ」
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>不过除去噪音，房子格调本身相当可以。式样古色古香，整体上没有硬伤，壁龛和檐廊也有，很够味道。从窗口泻进的春日阳光在榻榻米上做出小小的方形光照，很像我小时候住过的房子。“租吧。”我说，“的确很吵，不过我想总可以习惯的。”</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落12 对话与签约 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                「あなたがそう言うんなら、それでいいわよ」と彼女は言った。<br>
+                「ここでこんな風にじっとしているとき、まるで自分が結婚して、家庭を持っているような気がするんだ」<br>
+                「だって本当に結婚したんじゃない？」<br>
+                「そりゃあまあそうだけどさ」と僕は言った。<br>
+                我々は不動産屋に戻り、家を借りたいと言った。<br>
+                「うるさくなかった？」と頭の禿げた不動産屋が訊ねた。<br>
+                「そりゃあうるさかったけれど、なんとか慣れますよ」と僕は言った。<br>
+                不動産屋は眼鏡をはずしてガーゼでレンズを拭き、湯呑みの茶を一口すすり、それから眼鏡をかけて僕の顔を見た。「ま、若いからね」と彼は言った。<br>
+                「ええ」と僕は言った。<br>
+                そして我々は賃貸契約をとりかわした。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>“你这么说，就这样吧。”她应道。<br>“在这里这么待着不动，觉得就像自己结婚成家了。”<br>“实际上不也结婚了？”<br>“那是，那倒是。”我说。<br>我们折回不动产中介店，说想租。<br>“不吵？”秃脑瓜子中介商询问。<br>“吵当然吵，可总能习惯。”我说。<br>中介商摘下眼镜，用纱布擦拭镜片，啜口茶杯里的茶重新戴回，看我的脸。“噢，年轻嘛，到底。”他说。<br>“嗯。”我应道。接着我们签了租约。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落13 搬家一无所有 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                引越しは友だちのライトバン一台で十分間にあった。布団と衣類と食器と電気スタンドと何冊かの本と一匹の猫、それが我々の全財産だった。ラジオもなければテレビもなかった。洗濯機も冷蔵庫も食卓もガス・ストーブも電話も湯わかしも電気掃除機もトースターも、何ひとつなかった。我々はそれくらい貧乏だった。だから引越しといってもものの三十分とかからなかった。金がなければないで人生はすごく簡単だ。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>搬家用朋友一辆轻型客货两用车足矣。被褥、衣服、餐具、台灯、几册书和一只猫——这便是我们的全部家当。既无组合音响又无电视机，洗衣机没有电冰箱没有餐桌没有煤气灶没有电话没有电热水瓶没有吸尘器没有电烤箱没有，一无所有。我们就是穷到这个地步。所以，虽说是搬家，三十分钟都没花上。没钱也好，人生简洁至极。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落14 朋友吃惊 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                引越しを手伝ってくれた友人は二本の線路にはさみこまれた我々の新しい住居を目にしてかなりびっくりしたようだった。彼は引越しを終えてから僕の方を向いて何かを言おうとしたが、ちょうど特急列車が走りかかったおかげで何も聞こえなかった。<br>
+                「何か言った？」<br>
+                「本当にこんなところに人が住むんだなあ」と感心したように彼は言った。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>帮忙搬家的朋友看到我们夹在两条铁路之间的新居，显得相当惊愕。搬完家他想朝我们说什么，碰巧特快驶过，什么也没听见。<br>“你说什么来着？”<br>“这样的地方真的也能住人！”他一副敬佩的神情。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落15 两年居住，冬天地狱 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                結局我々はその家に二年住んだ。<br>
+                おそろしく建てつけの悪い家で、すきま風がいたるところから入ってきた。おかげで夏は快適だったが、そのかわり冬は地獄だった。ストーブを買う金もなかったので、日が暮れると僕と彼女と猫は布団の中にもぐりこみ、文字どおり抱きあって眠った。朝起きてみたら台所の流し台が凍りついていたなんてこともしょっちゅうだった。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>最终，我们在那房子里住了两年。<br>房子建得极其马虎，到处有空隙来风。夏天自是开心惬意，冬天就成了地狱。买取暖炉的钱都没有，天一黑，我就和她和猫钻进被窝，那才叫不折不扣的相抱而眠。早上起来看到厨房洗涤槽已经结冰的事也屡见不鲜。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落16 春天，罢工，阳光免费 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                冬が終わると、春がやってきた。春は素敵な季節だった。春がやってくると、僕も彼女も猫もほっとした。四月には鉄道のストライキが何日かあった。ストライキがあると、僕たちは本当に幸せだった。電車は一日じゅうただの一本も線路の上を走らなかった。僕と彼女は猫を抱いて線路に降り、ひなたぼっこをした。まるで湖の底に座っているみたいに静かだった。僕たちは若くて、結婚したばかりで、太陽の光はただだった。
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>冬去春来。春天美妙无比。春天一到，我也好她也好猫也好无不如释重负。四月间铁路有几天罢工。一有罢工，我们真是欢欣鼓舞。一整天一列车都没有。我和她抱着猫到路轨上晒太阳。安静得简直像坐在湖底。我们年轻，新婚不久，阳光免费。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- 段落17 结尾 -->
+        <div class="para-unit">
+            <div class="japanese-para">
+                僕は今でも「貧乏」という言葉を聞くたびに、あの三角形の細長い土地のことを思い出す。今あの家にはいったいどんな人が住んでいるんだろう？
+            </div>
+            <details>
+                <summary><span class="summary-text">中文</span><span class="summary-icon">⌲</span></summary>
+                <div class="chinese-translation">
+                    <p>至今每次听到“贫穷”二字，我都会想起那块三角形的细长土地。那房子现在到底住着什么人呢？</p>
+                </div>
+            </details>
+        </div>
+    </div>
+
+    <!-- 词汇表 (同上) -->
+    <div class="glossary">
+        <h3>📘 ことばノート <span>预习用</span></h3>
+        <div class="glossary-grid">
+            <div class="glossary-item"><span class="glossary-word">三角地帯</span> <div class="glossary-def">三角形地带，文中指夹在两条铁路间的楔形土地。</div></div>
+            <div class="glossary-item"><span class="glossary-word">見当もつかない</span> <div class="glossary-def">完全没有头绪，无法想象。</div></div>
+            <div class="glossary-item"><span class="glossary-word">デルタ</span> <div class="glossary-def">delta，三角洲。</div></div>
+            <div class="glossary-item"><span class="glossary-word">くさび</span> <div class="glossary-def">楔子，一头尖锐的固定工具。</div></div>
+            <div class="glossary-item"><span class="glossary-word">包丁</span> <div class="glossary-def">菜刀。</div></div>
+            <div class="glossary-item"><span class="glossary-word">訊ねる</span> <div class="glossary-def">询问，打听。</div></div>
+            <div class="glossary-item"><span class="glossary-word">いぼ</span> <div class="glossary-def">疣，瘊子，比喻累赘、多余之物。</div></div>
+            <div class="glossary-item"><span class="glossary-word">国鉄線 / 私鉄線</span> <div class="glossary-def">国有铁路/私营铁路。</div></div>
+            <div class="glossary-item"><span class="glossary-word">駆逐艦</span> <div class="glossary-def">驱逐舰。</div></div>
+            <div class="glossary-item"><span class="glossary-word">ブリッジ</span> <div class="glossary-def">舰桥，驾驶台。</div></div>
+            <div class="glossary-item"><span class="glossary-word">やれやれ</span> <div class="glossary-def">哎呀…（表示叹息或轻微抱怨）</div></div>
+            <div class="glossary-item"><span class="glossary-word">うらぶれる</span> <div class="glossary-def">落魄、萧条，此处形容荒凉。</div></div>
+            <div class="glossary-item"><span class="glossary-word">ピシピシ</span> <div class="glossary-def">拟声词，咔咔响，形容玻璃震动。</div></div>
+            <div class="glossary-item"><span class="glossary-word">ジャン＝リュック・ゴダール</span> <div class="glossary-def">戈达尔，法国导演，以打破叙事连续性闻名。</div></div>
+            <div class="glossary-item"><span class="glossary-word">日だまり</span> <div class="glossary-def">向阳处，阳光洒落的一小块地方。</div></div>
+        </div>
+    </div>
+
+    <!-- 文化笔记 -->
+    <div class="extra-note">
+        <span class="badge">📎 村上笔记</span> 这篇小说写于1970年代末，带有明显的自传色彩——当时村上夫妇经营爵士酒吧，住在简陋的铁路旁，穷得只有猫、书和彼此。标题把“贫穷”比作“奶酪蛋糕”，既幽默又温暖。文中“阳光免费”是点睛之笔，也是村上早期随笔常用的意象，代表青春里唯一取之不竭的东西。<br>
+        <span style="display:inline-block; margin-top: 12px;">📌 思考的种子：贫穷在文中既是物质匮乏，也是一种“形状”——三角地带像奶酪蛋糕，贫穷居然可以被比喻成甜点，你读的时候感受到的是自嘲、乐观，还是别的什么？</span>
+    </div>
+
+    <div class="footer">
+        读书会第三回 · 预习用 · 原文：講談社文庫『カンガルー日和』｜中文：林少华(上海译文出版社) · 下划线词悬停可看注释
+    </div>
+</div>
+</body>
+</html>
